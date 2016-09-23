@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MITCRMApp.Views.LoginPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True">
+
+    <StackLayout Padding="40">
+        <Label Text="{Binding TextoBemVindo}" />
+		
+        <Entry Keyboard="Email"
+               Placeholder="Digite aqui seu usuário"
+               Text="{Binding Username}" />
+		
+        <Entry IsPassword="true"
+               Placeholder="Digite aqui sua senha"
+               Text="{Binding Password}" />
+		
+        <Button Command="{Binding ClickEntrar}" Text="ENTRAR" />
+    </StackLayout>
+
+
+</ContentPage>
