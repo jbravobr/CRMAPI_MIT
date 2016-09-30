@@ -2,22 +2,108 @@
 <ContentPage x:Class="MITCRMApp.Views.LoginPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MITCRMApp;assembly=MITCRMApp"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True">
+             prism:ViewModelLocator.AutowireViewModel="True"
+             BackgroundColor="{x:Static local:AppConstants.NewBackgroudColor}">
+    <ContentPage.Content>
 
-    <StackLayout Padding="40">
-        <Label Text="{Binding TextoBemVindo}" />
-		
-        <Entry Keyboard="Email"
-               Placeholder="Digite aqui seu usuário"
-               Text="{Binding Username}" />
-		
-        <Entry IsPassword="true"
-               Placeholder="Digite aqui sua senha"
-               Text="{Binding Password}" />
-		
-        <Button Command="{Binding ClickEntrar}" Text="ENTRAR" />
-    </StackLayout>
+        <ScrollView Orientation="Vertical">
+            <Grid VerticalOptions="FillAndExpand" Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="80" />
+                </Grid.RowDefinitions>
 
+                <StackLayout Grid.Row="0"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="StartAndExpand">
+                    <StackLayout.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <OnPlatform.iOS>0, 80, 0, 0</OnPlatform.iOS>
+                            <OnPlatform.Android>0, 60, 0, 0</OnPlatform.Android>
+                        </OnPlatform>
+                    </StackLayout.Padding>
 
+                    <!--<Image WidthRequest="260"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Source="{x:Static local:AppConstants.LogoImage}" />-->
+
+                </StackLayout>
+
+                <!--  FIELDS CONTAINER  -->
+                <Grid Grid.Row="1"
+                      VerticalOptions="CenterAndExpand"
+                      ColumnSpacing="0"
+                      Padding="0"
+                      RowSpacing="10">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  EMAIL FIELD  -->
+                    <StackLayout Grid.Row="0">
+                        <Entry x:Name="Username"
+                               Keyboard="Default"
+                               Placeholder="Digite seu usuário"
+                               PlaceholderColor="{x:Static local:AppConstants.Blue}"
+                               Text="{Binding Username}"
+                               TextColor="{x:Static local:AppConstants.Red}" />
+                    </StackLayout>
+
+                    <!--  PASSWORD FIELD  -->
+                    <StackLayout Grid.Row="1">
+                        <Entry x:Name="Password"
+                               IsPassword="true"
+                               Keyboard="Default"
+                               Placeholder="Digite a sua senha"
+                               PlaceholderColor="{x:Static local:AppConstants.Blue}"
+                               Text="{Binding Password}"
+                               TextColor="{x:Static local:AppConstants.Red}" />
+                    </StackLayout>
+
+                    <!--  BUTTON LOGIN  -->
+                    <StackLayout Grid.Row="2">
+                        <Button Margin="0,20,0,0"
+                                BackgroundColor="{x:Static local:AppConstants.LightBlue}"
+                                Command="{Binding Confirm}"
+                                Text="ENTRAR"
+                                TextColor="{x:Static local:AppConstants.White}">
+                        </Button>
+                    </StackLayout>
+
+                    <!--  LOADER COM ACTIVITY INDICATOR CENTRALIZADO  -->
+                    <!-- <AbsoluteLayout Grid.Row="2">
+                        <ActivityIndicator x:Name="Loader"
+                                           AbsoluteLayout.LayoutBounds=".5, .5, -1, -1"
+                                           AbsoluteLayout.LayoutFlags="PositionProportional"
+                                           IsEnabled="{Binding isBusy}"
+                                           IsRunning="{Binding isBusy}"
+                                           IsVisible="{Binding isBusy}"
+                                           Color="Yellow" />
+                    </AbsoluteLayout>-->
+
+                    <StackLayout Grid.Row="3"
+                                 Margin="0,30,0,0"
+                                 VerticalOptions="End">
+                        <Label BackgroundColor="{x:Static local:AppConstants.NewBackgroudColor}"
+                               HorizontalTextAlignment="Center"
+                               Text="Esqueci a minha senha"
+                               TextColor="{x:Static local:AppConstants.White}">
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ForgotPassword}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

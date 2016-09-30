@@ -2,10 +2,47 @@
 <ContentPage x:Class="MITCRMApp.Views.DashboardPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MITCRMApp;assembly=MITCRMApp"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True">
 
-    <Label 
-           Text="{Binding Texto}" FontSize="{x:Static AppConstants.BaseFontSize}"/>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:TextChangedEventArgsToTextChangedConverter x:Key="TextChangedConverter" />
+            <local:ItemTappedEventArgsToItemTappedConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
+    <StackLayout Margin="5,5,5,5" VerticalOptions="FillAndExpand">
+        <Button Command="{Binding CallApiCommand}"
+                Text="Call API"
+                TextColor="Red" />
+        <ListView x:Name="lvCustomers"
+                  CachingStrategy="RecycleElement"
+                  GroupDisplayBinding="{Binding Key}"
+                  GroupShortNameBinding="{Binding Key}"
+                  IsGroupingEnabled="true"
+                  ItemsSource="{Binding GroupedCustomers}"
+                  SeparatorVisibility="None">
+
+            <ListView.Behaviors>
+                <local:EventToCommandBehavior Command="{Binding lvItemTappedCommand}"
+                                              Converter="{StaticResource ItemTappedConverter}"
+                                              EventName="ItemTapped" />
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Detail="{Binding lastName}"
+                              DetailColor="Blue"
+                              Text="{Binding firstName}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ActivityIndicator VerticalOptions="CenterAndExpand"
+                           IsEnabled="{Binding ShowLoading}"
+                           IsRunning="{Binding ShowLoading}"
+                           IsVisible="{Binding ShowLoading}"
+                           Color="Blue" />
+    </StackLayout>
 </ContentPage>

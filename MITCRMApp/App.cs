@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Net.Http;
 using MITCRMApp.Views;
 using Prism.Unity;
+
+using Microsoft.Practices.Unity;
 
 namespace MITCRMApp
 {
     public class App : PrismApplication
     {
+        public static HttpClient _clientHttp;
+
         public App()
         {
         }
@@ -19,6 +24,8 @@ namespace MITCRMApp
         {
             Container.RegisterTypeForNavigation<LoginPage>();
             Container.RegisterTypeForNavigation<DashboardPage>();
+
+            Container.RegisterType(typeof(IServicesBase<>), typeof(ServicesBase<>));
         }
     }
 }

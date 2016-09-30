@@ -1,31 +1,35 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using Prism.Navigation;
+using Prism.Services;
+using System;
 
 namespace MITCRMApp.ViewModels
 {
     public class LoginPageViewModel : BindableBase
     {
-        public string TextoBemVindo { get; set; } = "Bem vindo!";
-
-        public string Username { get; set; } = "jbravo.br@gmail.com";
-
-        public string Password { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public DelegateCommand Confirm { get; set; }
+        public DelegateCommand ForgotPassword { get; set; }
 
         readonly INavigationService _navigationService;
+        readonly IPageDialogService _pageDialogService;
 
-        public Command ClickEntrar
+        public Action ConfirmAction
         {
             get
             {
-                return new Command(async () => 
+                return new Action(async () =>
                 {
-                    await NavigateTo();
+                    if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
+                        await NavigateTo();
+                    else
+                        await _pageDialogService.DisplayAlertAsync(string.Empty
+                                                                   , "Você precisa informar usuário e senha"
+                                                                   , "OK");
                 });
             }
         }
@@ -35,9 +39,13 @@ namespace MITCRMApp.ViewModels
             await _navigationService.NavigateAsync("DashboardPage");
         }
 
-        public LoginPageViewModel(INavigationService navigationService)
+        public LoginPageViewModel(INavigationService navigationService
+                                 , IPageDialogService pageDialogService)
         {
             _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
+            Confirm = new DelegateCommand(ConfirmAction);
+            ForgotPassword = new DelegateCommand(() => Device.OpenUri(new Uri("http://www.google.com.br")));
         }
     }
 }
