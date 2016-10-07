@@ -36,7 +36,7 @@ namespace MITCRMApp.ViewModels
 
         async Task NavigateTo()
         {
-            await _navigationService.NavigateAsync("DashboardPage");
+            await _navigationService.NavigateAsync("RootPage");
         }
 
         public LoginPageViewModel(INavigationService navigationService

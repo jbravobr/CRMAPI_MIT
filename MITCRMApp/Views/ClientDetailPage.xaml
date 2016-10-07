@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MITCRMApp.Views.ClientDetailPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True">
+
+
+
+    <StackLayout Margin="0,30,0,0">
+
+        <Label Font="16"
+               FontAttributes="Bold"
+               Text="{Binding Id}" />
+        <Label Font="18" Text="{Binding Name}" />
+        <Label Text="{Binding LastName}" />
+
+		<Button Text="Back" Command="{Binding GoBack}" />
+
+
+    </StackLayout>
+
+
+</ContentPage>

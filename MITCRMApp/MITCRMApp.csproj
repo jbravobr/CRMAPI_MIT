@@ -35,6 +35,18 @@
     <EmbeddedResource Include="Views\DashboardPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\RootPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BaseNavigationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ClientDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MITCRMAppPage.xaml.cs">
@@ -61,6 +73,25 @@
     <Compile Include="Converters\ItemTappedEventArgsToItemTappedConverter.cs" />
     <Compile Include="Converters\SelectedItemEventArgsToSelectedItemConverter.cs" />
     <Compile Include="Converters\TextChangedEventArgsToTextChangedConverter.cs" />
+    <Compile Include="Views\RootPage.xaml.cs">
+      <DependentUpon>RootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="ViewModels\RootPageViewModel.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Converters\ImagemBrookerConverter.cs" />
+    <Compile Include="Views\BaseNavigationPage.cs">
+      <DependentUpon>BaseNavigationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BaseNavigationPageViewModel.cs" />
+    <Compile Include="Utils\CustomerVM.cs" />
+    <Compile Include="Views\ClientDetailPage.xaml.cs">
+      <DependentUpon>ClientDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ClientDetailPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Prism">
@@ -101,6 +132,9 @@
     </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.51.3\lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageCircle.Forms.Plugin.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Forms.ImageCircle.1.8.0.5\lib\portable-net45+wp80+win8+wpa81\ImageCircle.Forms.Plugin.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

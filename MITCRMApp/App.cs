@@ -24,6 +24,9 @@ namespace MITCRMApp
         {
             Container.RegisterTypeForNavigation<LoginPage>();
             Container.RegisterTypeForNavigation<DashboardPage>();
+            Container.RegisterTypeForNavigation<RootPage>();
+            Container.RegisterTypeForNavigation<BaseNavigationPage>();
+            Container.RegisterTypeForNavigation<ClientDetailPage>();
 
             Container.RegisterType(typeof(IServicesBase<>), typeof(ServicesBase<>));
         }

@@ -6,35 +6,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PropertyChanged;
+using Xamarin.Forms;
+using Prism.Navigation;
 
 namespace MITCRMApp.ViewModels
 {
     [ImplementPropertyChanged]
-    public class DashboardPageViewModel : BindableBase
+    public class DashboardPageViewModel : BindableBase, INavigationAware
     {
         readonly IServicesBase<Customer> _serviceBase;
         readonly IPageDialogService _pageDialogService;
+        readonly INavigationService _navigationService;
 
-        public ObservableCollection<Grouping<string, Customer>> GroupedCustomers { get; set; }
+        public ObservableCollection<Grouping<string, CustomerVM>> GroupedCustomers { get; set; }
         public bool ShowListView { get; set; }
         public bool ShowLoading { get; set; }
         public DelegateCommand CallApiCommand { get; set; }
-        public DelegateCommand<Customer> lvItemTappedCommand { get; set; }
+        public DelegateCommand<CustomerVM> lvItemTappedCommand { get; set; }
 
-        public Action<Customer> lvItemTapped
+        public Action<CustomerVM> lvItemTapped
         {
             get
             {
-                return new Action<Customer>(async (customer) =>
+                return new Action<CustomerVM>(async (customer) =>
                 {
                     if (customer == null)
                         await _pageDialogService.DisplayAlertAsync(string.Empty, "Erro ao selecionar cliente", "OK");
                     else
                     {
-                        var msg = $"O cliente selecionado foi: {customer.firstName}";
-                        await _pageDialogService.DisplayAlertAsync(string.Empty
-                                                                   , msg
-                                                                   , "OK");
+                        var parameters = new NavigationParameters();
+                        parameters.Add("Customer", customer);
+
+                        await _navigationService.NavigateAsync("ClientDetailPage", parameters);
                     }
                 });
             }
@@ -75,22 +78,49 @@ namespace MITCRMApp.ViewModels
 
         public void GroupData(List<Customer> customers)
         {
-            var customersGrouped = from customer in customers
-                                   orderby customer.firstName
-                                   group customer by customer.NameSort into groupCustomers
-                                   select new Grouping<string, Customer>(groupCustomers.Key, groupCustomers);
+            var listVM = new List<CustomerVM>();
+            foreach (var item in customers)
+            {
+                listVM.Add(new CustomerVM
+                {
+                    LastName = item.lastName,
+                    Name = item.firstName,
+                    Id = item.Id
+                });
+            }
 
-            GroupedCustomers = new ObservableCollection<Grouping<string, Customer>>(customersGrouped);
+            var customersGrouped = from customer in listVM
+                                   orderby customer.Name
+                                   group customer by customer.NameSort into groupCustomers
+                                   select new Grouping<string, CustomerVM>(groupCustomers.Key, groupCustomers);
+
+            GroupedCustomers = new ObservableCollection<Grouping<string, CustomerVM>>(customersGrouped);
             ShowLoading = false;
         }
 
+        public void OnNavigatedFrom(NavigationParameters parameters)
+        {
+            if (parameters.ContainsKey("Voltei"))
+                _pageDialogService.DisplayAlertAsync(string.Empty
+                                                     , "Im Back!"
+                                                    , "OK");
+        }
+
+        public void OnNavigatedTo(NavigationParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
         public DashboardPageViewModel(IServicesBase<Customer> serviceBase
-                                     , IPageDialogService pageDialogService)
+                                     , IPageDialogService pageDialogService
+                                     , INavigationService navigationService)
         {
             _serviceBase = serviceBase;
             _pageDialogService = pageDialogService;
             CallApiCommand = new DelegateCommand(CallApi);
-            lvItemTappedCommand = new DelegateCommand<Customer>(lvItemTapped);
+            _navigationService = navigationService;
+
+            lvItemTappedCommand = new DelegateCommand<CustomerVM>(lvItemTapped);
         }
     }
 }

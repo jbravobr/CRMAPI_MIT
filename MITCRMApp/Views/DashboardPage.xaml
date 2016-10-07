@@ -33,9 +33,9 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Detail="{Binding lastName}"
+                    <TextCell Detail="{Binding LastName}"
                               DetailColor="Blue"
-                              Text="{Binding firstName}" />
+                              Text="{Binding Name}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

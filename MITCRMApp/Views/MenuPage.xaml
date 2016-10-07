@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MITCRMApp.Views.MenuPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             xmlns:local="clr-namespace:MITCRMApp;assembly=MITCRMApp"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             Title="Menu"
+             prism:ViewModelLocator.AutowireViewModel="True">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ItemTappedEventArgsToItemTappedConverter x:Key="ItemTappedConverter" />
+            <local:ImagemBrookerConverter x:Key="ImageProfileConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Grid HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Start"
+                      BackgroundColor="#252e44">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:CircleImage Grid.Row="1"
+                                          Grid.Column="0"
+                                          Margin="20,0,10,0"
+                                          HeightRequest="60"
+                                          BorderColor="White"
+                                          BorderThickness="3"
+                                          Source="companyImage.png">
+
+                        <controls:CircleImage.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <OnPlatform.iOS>
+                                    100
+                                </OnPlatform.iOS>
+                                <OnPlatform.Android>
+                                    60
+                                </OnPlatform.Android>
+                            </OnPlatform>
+                        </controls:CircleImage.WidthRequest>
+
+                        <controls:CircleImage.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <OnPlatform.iOS>
+                                    3,10,0,0
+                                </OnPlatform.iOS>
+                            </OnPlatform>
+                        </controls:CircleImage.Margin>
+                    </controls:CircleImage>
+
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="0,0,20,0"
+                           VerticalOptions="Center"
+                           FontSize="20"
+                           HorizontalTextAlignment="Start"
+                           Text="{Binding LoggedUser.CompanyName}"
+                           TextColor="#FFFFFF">
+                        <Label.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <OnPlatform.iOS>
+                                    0,10,0,0
+                                </OnPlatform.iOS>
+                            </OnPlatform>
+                        </Label.Margin>
+                    </Label>
+
+                    <StackLayout Grid.Row="2"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2"
+                                 HorizontalOptions="FillAndExpand"
+                                 BackgroundColor="#1e263a"
+                                 Padding="0, 14">
+
+                        <Grid HorizontalOptions="Center" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="0"
+                                   Margin="20,0,5,0"
+                                   WidthRequest="35"
+                                   HeightRequest="35"
+                                   Source="{Binding LoggedUser.ProfileImage}" />
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   FontAttributes="Bold"
+                                   FontSize="14"
+                                   Text="{Binding LoggedUser.Name}"
+                                   TextColor="#d1d1d1" />
+
+                            <Image Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="2"
+                                   Margin="0,0,20,0"
+                                   WidthRequest="15"
+                                   HeightRequest="15"
+                                   VerticalOptions="Center"
+                                   Source="{Binding ImgArrow}" />
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   FontSize="12"
+                                   Text="{Binding LoggedUser.Document}"
+                                   TextColor="#d2d2d2" />
+                        </Grid>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+								Command="{Binding ShowHideCompaniesList}" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Grid>
+
+                <!--  MENU ITENS  -->
+                <StackLayout Margin="20, 10, 20, 10" IsVisible="{Binding isMenuListItemOnScreen}">
+
+                    <Grid BackgroundColor="#d2d2d2"
+                          ColumnSpacing="0"
+                          Padding="0"
+                          RowSpacing="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Row="0"
+                               Grid.Column="0"
+                               WidthRequest="18"
+                               HeightRequest="18"
+                               BackgroundColor="#FFFFFF"
+                               Source="clients.png" />
+
+                        <Label Grid.Row="0"
+                               Grid.Column="1"
+                               BackgroundColor="#FFFFFF"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               Text="MEUS CLIENTES"
+                               TextColor="#252e44"
+                               VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MenuNavigateCommand}" CommandParameter="BaseNavigationPage/DashboardPapge" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Image Grid.Row="1"
+                               Grid.Column="0"
+                               WidthRequest="18"
+                               HeightRequest="18"
+                               BackgroundColor="#FFFFFF"
+                               Source="exit.png" />
+
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               BackgroundColor="#FFFFFF"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               Text="SAIR"
+                               TextColor="#252e44"
+                               VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ExitCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               BackgroundColor="#FFFFFF" />
+                    </Grid>
+                </StackLayout>
+
+                <!--  COMPANIES LIST  -->
+                <StackLayout Margin="20, 10, 20, 10" IsVisible="{Binding isCompaniesListOnScreen}">
+                    <ListView Margin="0"
+                              CachingStrategy="RecycleElement"
+                              HasUnevenRows="true"
+                              IsPullToRefreshEnabled="false"
+                              ItemsSource="{Binding Companies}"
+                              SeparatorColor="#d2d2d2"
+                              SeparatorVisibility="None">
+
+                        <ListView.Behaviors>
+                            <local:EventToCommandBehavior Command="{Binding SelectedCompanyCommand}"
+                                                          Converter="{StaticResource ItemTappedConverter}"
+                                                          EventName="ItemTapped" />
+                        </ListView.Behaviors>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Margin="0,10,0,10"
+                                          ColumnSpacing="0"
+                                          Padding="0"
+                                          RowSpacing="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Grid.Column="0"
+                                               Margin="0,11,13,0"
+                                               WidthRequest="18"
+                                               HeightRequest="18"
+                                               VerticalOptions="Start"
+                                               BackgroundColor="#FFFFFF"
+                                               Source="{Binding ProfileImage}" />
+
+                                        <Label Grid.Row="0"
+                                               Grid.Column="1"
+                                               Grid.ColumnSpan="2"
+                                               FontAttributes="Bold"
+                                               Text="{Binding Name}"
+                                               TextColor="#252e44"
+                                               VerticalTextAlignment="Center">
+
+                                            <Label.FontSize>
+                                                <OnPlatform x:TypeArguments="x:Double">
+                                                    <OnPlatform.Android>14</OnPlatform.Android>
+                                                    <OnPlatform.iOS>10</OnPlatform.iOS>
+                                                </OnPlatform>
+                                            </Label.FontSize>
+
+                                        </Label>
+
+                                        <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               FontSize="13"
+                                               Style="{x:Static local:AppConstants.ListViewItem}"
+                                               Text="{Binding Document}"
+                                               VerticalTextAlignment="Start">
+
+                                            <Label.FontSize>
+                                                <OnPlatform x:TypeArguments="x:Double">
+                                                    <OnPlatform.iOS>12</OnPlatform.iOS>
+                                                </OnPlatform>
+                                            </Label.FontSize>
+
+                                        </Label>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
