@@ -4,12 +4,15 @@ using MITCRMApp.Views;
 using Prism.Unity;
 
 using Microsoft.Practices.Unity;
+using Realms;
 
 namespace MITCRMApp
 {
     public class App : PrismApplication
     {
         public static HttpClient _clientHttp;
+        public static SQLite.SQLiteConnection Conn { get; set; }
+        public static Realm realm { get; set; }
 
         public App()
         {
@@ -17,7 +20,7 @@ namespace MITCRMApp
 
         protected override void OnInitialized()
         {
-            NavigationService.NavigateAsync("LoginPage");
+            NavigationService.NavigateAsync("CadastraClientePage");
         }
 
         protected override void RegisterTypes()
@@ -28,7 +31,10 @@ namespace MITCRMApp
             Container.RegisterTypeForNavigation<BaseNavigationPage>();
             Container.RegisterTypeForNavigation<ClientDetailPage>();
 
+            Container.RegisterTypeForNavigation<CadastraClientePage>();
+
             Container.RegisterType(typeof(IServicesBase<>), typeof(ServicesBase<>));
+            Container.RegisterType(typeof(IRepositorioBase<>), typeof(RepositorioBase<>));
         }
     }
 }

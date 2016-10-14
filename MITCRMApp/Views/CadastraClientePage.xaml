@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MITCRMApp.Views.CadastraClientePage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True">
+
+
+    <Grid Margin="10,30,5,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0" Grid.Column="0">
+            <Label Text="Nome:" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="0" Grid.Column="1">
+            <Entry Text="{Binding _nome}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" Grid.Column="0">
+            <Label Text="Sobrenome:" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" Grid.Column="1">
+            <Entry Text="{Binding _sobrenome}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" Grid.Column="0">
+            <Label Text="Rua:" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" Grid.Column="1">
+            <Entry Text="{Binding _nomerua}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="3" Grid.Column="0">
+            <Label Text="Numero Rua:" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="3" Grid.Column="1">
+            <Entry Text="{Binding _numerorua}" />
+        </StackLayout>
+
+        <Button Grid.Row="4"
+                Grid.Column="0"
+                Command="{Binding InserirCommand}"
+                Text="Inserir Novo Cliente" />
+        <Button Grid.Row="5"
+                Grid.Column="0"
+                Command="{Binding RetornarCommand}"
+                Text="Retornar Cliente" />
+    </Grid>
+
+</ContentPage>
